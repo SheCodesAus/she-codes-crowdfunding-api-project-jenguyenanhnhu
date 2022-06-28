@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Pledge, Project
 
-# Register your models here.
+admin.site.register(Pledge)
+admin.site.register(Project)
