@@ -48,6 +48,7 @@ class Pledge(models.Model):
     comment = models.CharField(max_length=300)
     supporter = models.ForeignKey(
         get_user_model(),
+        null=True,
         on_delete=models.CASCADE,
         related_name='supporter_pledges'
     )
