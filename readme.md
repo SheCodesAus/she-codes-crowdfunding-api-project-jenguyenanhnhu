@@ -13,13 +13,14 @@ Screenshot for a successful POST request: ![](Screenshots/POSTProject.png)
 Screenshot for a successful POST Token request: ![](Screenshots/POSTToken.png)
 
 To see SPROCKET IDEAS in action, visit: https://sprocket-ideas.herokuapp.com/
+
 For a behind-the-scenes look, visit: https://github.com/SheCodesAus/she-codes-crowdfunding-api-project-jenguyenanhnhu
 ***
 
 ### HOW TO CREATE A PLEDGE/PROJECT AS A USER (via Insomnia)
-1. Go to POST <users/> and create a new user.
-2. Go to POST <api-token-auth/> and generate your authentication token.
-3. Go to POST <projects/> and create a new project.
-4. Go to GET <projects/> to see all projects.
-4. Go to POST <pledges/> and create a pledge for a project.
-5. Go to GET <projects/your-project-id> and view your project.
+1. Go to POST +users/+ and create a new user.
+2. Go to POST +api-token-auth/+ and generate your authentication token.
+3. Go to POST +projects/>+ and create a new project.
+4. Go to GET +projects/+ to see all projects.
+4. Go to POST +pledges/+ and create a pledge for a project.
+5. Go to GET +projects/your-project-id+ and view your project.
