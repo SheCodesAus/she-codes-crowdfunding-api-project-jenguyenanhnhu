@@ -17,4 +17,5 @@ To see SPROCKET IDEAS in action, visit: https://sprocket-ideas.herokuapp.com/
 ***
 
 ## HOW TO BE A USER (via Insomnia)
-1. 
+1. POST /users/ request - 
+2. 

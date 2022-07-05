@@ -66,8 +66,8 @@ class PledgeList(APIView):
         serializer = PledgeSerializer(data=request.data)
         if request.user.is_anonymous == True:
             return Response(
-            {"message": "You must be logged in"},
-            status=status.HTTP_400_BAD_REQUEST
+                serializer.data,
+                status=status.HTTP_201_CREATED
             )
         if serializer.is_valid():
             serializer.save(supporter=request.user)
