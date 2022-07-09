@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
-from .serializers import CustomUserSerializer, CustomUserDetailSerializer
+from .serializers import CustomUserSerializer
 
 class CustomUserList(APIView):
     def get(self, request):
