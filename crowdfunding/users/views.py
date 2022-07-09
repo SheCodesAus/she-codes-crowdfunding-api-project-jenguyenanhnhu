@@ -32,11 +32,12 @@ class CustomUserDetail(APIView):
         if request.user == CustomUser.objects.get(pk=pk):
             serializer = CustomUserSerializer(self.get_object(pk))
             return Response(serializer.data)
-        return Response({"Oops, you're trying to look at another user's details again. Please go to your user profile."}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({"Oops! You're trying to look at another user's details. Please go to your user profile."}, status=status.HTTP_401_UNAUTHORIZED)
 
     def put(self, request, pk):
-        if request.user == self.get_object(pk):
-            serializer = CustomUserSerializer(request.user, data=request.data, partial=True) 
+        if request.user == CustomUser.objects.get(pk=pk):
+            user = self.get_object(pk)
+            serializer = CustomUserSerializer(user, data=request.data, partial=True) 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
