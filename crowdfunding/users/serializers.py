@@ -7,6 +7,7 @@ class CustomUserSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
     email = serializers.CharField(max_length=200)
+    password = serializers.CharField()
     
     def create(self, validated_data):
         return CustomUser.objects.create(**validated_data)
