@@ -18,7 +18,7 @@ To see SPROCKET IDEAS in action, visit: https://sprocket-ideas.herokuapp.com/
 For a behind-the-scenes look, visit: https://github.com/SheCodesAus/she-codes-crowdfunding-api-project-jenguyenanhnhu
 ***
 
-### HOW TO CREATE A PLEDGE/PROJECT AS A USER (via Insomnia)
+### How to navigate SPROCKET IDEAS (via Insomnia)
 1. Go to POST users/ and create a new user.
     You will need to input the following: 
         "username":

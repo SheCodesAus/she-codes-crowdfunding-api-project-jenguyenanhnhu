@@ -19,7 +19,6 @@ class CustomUserList(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-    
 class CustomUserDetail(APIView):
 
     def get_object(self, pk):
@@ -32,3 +31,11 @@ class CustomUserDetail(APIView):
         user = self.get_object(pk)
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
+
+    def patch(self, request, pk):
+        edit_user = self.get_object(pk)
+        serializer = CustomUserSerializer(edit_user, data=request.data, partial=True) 
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response({"Oops! You're changing your user information to something strange. Give it another go."}, status=status.HTTP_400_BAD_REQUEST)
