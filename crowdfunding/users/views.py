@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
-from .serializers import CustomUserSerializer
+from .serializers import CustomUserSerializer, CustomUserDetailSerializer
 
 class CustomUserList(APIView):
     def get(self, request):
@@ -30,16 +30,16 @@ class CustomUserDetail(APIView):
             
     def get(self, request, pk):
         if request.user == self.get_object(pk):
-            serializer = CustomUserSerializer(request.user)
+            serializer = CustomUserDetailSerializer(request.user)
             return Response(serializer.data)
         return Response({"Oops! You're trying to look at another user's details. Please go to your user profile."}, status=status.HTTP_401_UNAUTHORIZED)
 
     def put(self, request, pk):
         if request.user == self.get_object(pk):
             user = self.get_object(pk)
-            serializer = CustomUserSerializer(instance=user, data=request.data, partial=True)
+            data = request.data
+            serializer = CustomUserDetailSerializer(instance=user, data=data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, {"Oops! You're changing your user information to something strange. Give it another go."}, status=status.HTTP_400_BAD_REQUEST)
-
