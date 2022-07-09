@@ -30,7 +30,7 @@ class CustomUserDetail(APIView):
             
     def get(self, request, pk):
         if request.user == self.get_object(pk):
-            serializer = CustomUserDetailSerializer(request.user)
+            serializer = CustomUserSerializer(request.user)
             return Response(serializer.data)
         return Response({"Oops! You're trying to look at another user's details. Please go to your user profile."}, status=status.HTTP_401_UNAUTHORIZED)
 
