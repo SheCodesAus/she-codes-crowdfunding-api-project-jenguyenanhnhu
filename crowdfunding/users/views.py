@@ -24,21 +24,19 @@ class CustomUserDetail(APIView):
 
     def get_object(self, pk):
         try:
-            user = CustomUser.objects.get(pk=pk)
-            return user
+            return CustomUser.objects.get(pk=pk)
         except CustomUser.DoesNotExist:
             raise Http404
             
     def get(self, request, pk):
         if request.user == CustomUser.objects.get(pk=pk):
-            user = self.get_object(pk)
-            serializer = CustomUserSerializer(user)
+            serializer = CustomUserSerializer(self.get_object(pk))
             return Response(serializer.data)
         return Response({"Oops, you're trying to look at another user's details again. Please go to your user profile."}, status=status.HTTP_401_UNAUTHORIZED)
 
     def patch(self, request, pk):
-        if request.user_id == self.get_object(pk):
-            serializer = CustomUserSerializer(request.user_id, data=request.data, partial=True) 
+        if request.user == self.get_object(pk):
+            serializer = CustomUserSerializer(request.user, data=request.data, partial=True) 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
