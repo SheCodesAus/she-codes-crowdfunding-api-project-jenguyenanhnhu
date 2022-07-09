@@ -29,16 +29,17 @@ class CustomUserDetail(APIView):
             raise Http404
             
     def get(self, request, pk):
-        if request.user == CustomUser.objects.get(pk=pk):
-            serializer = CustomUserSerializer(self.get_object(pk))
+        if request.user == self.get_object(pk):
+            serializer = CustomUserSerializer(request.user)
             return Response(serializer.data)
         return Response({"Oops! You're trying to look at another user's details. Please go to your user profile."}, status=status.HTTP_401_UNAUTHORIZED)
 
     def put(self, request, pk):
-        if request.user == CustomUser.objects.get(pk=pk):
+        if request.user == self.get_object(pk):
             user = self.get_object(pk)
-            serializer = CustomUserSerializer(user, data=request.data, partial=True) 
+            serializer = CustomUserSerializer(instance=user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        return Response({"Oops! You're changing your user information to something strange. Give it another go."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, {"Oops! You're changing your user information to something strange. Give it another go."}, status=status.HTTP_400_BAD_REQUEST)
+
