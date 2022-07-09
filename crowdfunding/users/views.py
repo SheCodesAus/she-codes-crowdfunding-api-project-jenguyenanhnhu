@@ -50,6 +50,7 @@ class CustomUserDetail(APIView):
         data = request.data
         serializer = CustomUserDetailSerializer(instance=user, data=data, partial=True)
         if serializer.is_valid():
+            print(serializer.data)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
