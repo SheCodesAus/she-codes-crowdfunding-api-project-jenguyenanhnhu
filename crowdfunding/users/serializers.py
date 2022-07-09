@@ -21,10 +21,10 @@ class CustomUserSerializer(serializers.Serializer):
 class CustomUserDetailSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
-        instance.username = validated_data.get('Username', instance.username)
-        instance.first_name = validated_data.get('First Name',instance.first_name)
-        instance.last_name = validated_data.get('Last Name', instance.last_name)
-        instance.email = validated_data.get('Email Address', instance.email)
+        instance.username = validated_data.get('username', instance.username)
+        instance.first_name = validated_data.get('first_name',instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
         instance.save()
         return instance
 
