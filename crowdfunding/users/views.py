@@ -39,7 +39,8 @@ class CustomUserDetail(APIView):
             user = self.get_object(pk)
             data = request.data
             serializer = CustomUserDetailSerializer(instance=user, data=data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
-        return Response(serializer.errors, {"Oops! You're changing your user information to something strange. Give it another go."}, status=status.HTTP_400_BAD_REQUEST)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+            return Response(serializer.errors, {"Oops! You're changing your user information to something strange. Give it another go."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
