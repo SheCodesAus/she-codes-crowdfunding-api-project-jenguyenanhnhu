@@ -57,8 +57,7 @@ class PledgeList(APIView):
     def post(self, request):
         serializer = PledgeSerializer(data=request.data)
         if request.user.is_anonymous == True:
-            return Response({"Oops! You need to be logged in to give to a project."},
-            status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"Oops! You need to be logged in to give to a project."}, status=status.HTTP_401_UNAUTHORIZED)
         if serializer.is_valid():
             serializer.save(supporter=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
