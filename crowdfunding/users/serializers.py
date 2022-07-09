@@ -18,7 +18,7 @@ class CustomUserSerializer(serializers.Serializer):
     #     instance.email = validated_data.get('Email Address', instance.email)
     #     instance.save()
     #     return instance
-class CustomUserDetailSerializer(serializers.Serializer):
+# class CustomUserDetailSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)

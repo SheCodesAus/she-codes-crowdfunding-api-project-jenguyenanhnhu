@@ -48,7 +48,7 @@ class CustomUserDetail(APIView):
     def put(self, request, pk):
         user = self.get_object(pk)
         data = request.data
-        serializer = CustomUserDetailSerializer(instance=user, data=data, partial=True)
+        serializer = CustomUserSerializer(instance=user, data=data, partial=True)
         if serializer.is_valid():
             
             serializer.save()
