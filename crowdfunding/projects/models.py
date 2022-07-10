@@ -45,11 +45,11 @@ class Pledge(models.Model):
     project = models.ForeignKey('Project',on_delete=models.CASCADE,related_name='pledges')
     type = models.CharField(max_length=20, choices=PLEDGE_TYPES)
     amount = models.IntegerField()
-    comment = models.CharField(max_length=300)
+    comment = models.CharField(max_length=500)
     supporter = models.ForeignKey(
         get_user_model(),
-        null=True,
         on_delete=models.CASCADE,
         related_name='supporter_pledges'
     )
     date_created = models.DateTimeField()
+
