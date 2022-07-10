@@ -52,3 +52,4 @@ class Pledge(models.Model):
         on_delete=models.CASCADE,
         related_name='supporter_pledges'
     )
+    date_created = models.DateTimeField()

@@ -9,9 +9,19 @@ class PledgeSerializer(serializers.Serializer):
     comment = serializers.CharField(max_length=300)
     supporter = serializers.ReadOnlyField(source='supporter.id')
     project_id = serializers.IntegerField()
+    date_created = serializers.DateTimeField(read_only=True, default=timezone.now)
 
     def create(self, validated_data):
         return Pledge.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.type = instance.type
+        instance.amount = instance.amount
+        instance.comment = validated_data.get('comment', instance.comment)
+        instance.project_id = instance.project_id
+        instance.date_created = instance.date_created
+        instance.save()
+        return instance
 
 class ProjectSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
