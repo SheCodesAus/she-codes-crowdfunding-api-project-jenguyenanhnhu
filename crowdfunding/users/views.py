@@ -12,7 +12,7 @@ class CustomUserList(APIView):
             users = CustomUser.objects.all()
             serializer = CustomUserSerializer(users, many=True)
             return Response(serializer.data)
-        return Response(serializer.error, status=status.HTTP_401_UNAUTHORIZED)
+        return Response(serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
     
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
