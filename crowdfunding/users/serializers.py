@@ -11,15 +11,6 @@ class CustomUserSerializer(serializers.Serializer):
     
     def create(self, validated_data):
         return CustomUser.objects.create(**validated_data)
-    
-    # def update(self, instance, validated_data):
-    #     instance.username = validated_data.get('Username', instance.username)
-    #     instance.first_name = validated_data.get('First Name',instance.first_name)
-    #     instance.last_name = validated_data.get('Last Name', instance.last_name)
-    #     instance.email = validated_data.get('Email Address', instance.email)
-    #     instance.save()
-    #     return instance
-# class CustomUserDetailSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)
@@ -30,3 +21,5 @@ class CustomUserSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+    def delete(self, validated_data):
+        return CustomUser.objects.delete(**validated_data)
