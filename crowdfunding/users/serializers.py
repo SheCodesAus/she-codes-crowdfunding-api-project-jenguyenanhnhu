@@ -8,7 +8,6 @@ class CustomUserSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=50)
     email = serializers.EmailField()
     password = serializers.CharField()
-    extra_kwargs = {"password": {"write_only": True}}
     
     def create(self, validated_data):
         user = CustomUser(
