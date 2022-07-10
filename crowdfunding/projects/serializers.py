@@ -17,6 +17,7 @@ class PledgeSerializer(serializers.Serializer):
         instance.type = instance.type
         instance.amount = instance.amount
         instance.comment = validated_data.get('comment', instance.comment)
+        instance.supporter = instance.supporter
         instance.project_id = instance.project_id
         instance.save()
         return instance
