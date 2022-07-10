@@ -11,7 +11,13 @@ class CustomUserSerializer(serializers.Serializer):
     extra_kwargs = {"password": {"write_only": True}}
     
     def create(self, validated_data):
-        return CustomUser.objects.create(**validated_data)
+        user = CustomUser(
+            email=validated_data['email'],
+            username=validated_data['username']
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
     def update(self, instance, validated_data):
         instance.username = validated_data.get('username', instance.username)
