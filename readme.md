@@ -54,3 +54,6 @@ For a behind-the-scenes look, visit: https://github.com/SheCodesAus/she-codes-cr
 
 
 6. Go to GET projects/your-project-id and view your project.
+
+### ISSUES
+NOTE: Whenever I try to delete a user, I keep getting "Error: Transferred a partial file."
