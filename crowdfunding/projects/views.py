@@ -69,7 +69,7 @@ class PledgeList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PledgeDetail(APIView):
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def get_object(self, pk):
         try:
@@ -78,6 +78,10 @@ class PledgeDetail(APIView):
             return pledge
         except Pledge.DoesNotExist:
             raise Http404
+    
+    def get(self, request, pk):
+        serializer = PledgeSerializer(self.get_object(pk))
+        return Response(serializer.data)
 
     def put(self, request, pk):
         serializer = PledgeSerializer(instance=self.get_object(pk), data=request.data, partial=True)
