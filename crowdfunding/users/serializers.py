@@ -6,7 +6,7 @@ class CustomUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=20)
     first_name = serializers.CharField(max_length=50)
     last_name = serializers.CharField(max_length=50)
-    email = serializers.CharField(max_length=200)
+    email = serializers.EmailField()
     password = serializers.CharField()
     extra_kwargs = {"password": {"write_only": True}}
     
