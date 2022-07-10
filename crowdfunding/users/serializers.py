@@ -11,8 +11,10 @@ class CustomUserSerializer(serializers.Serializer):
     
     def create(self, validated_data):
         user = CustomUser(
+            username=validated_data['username'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
             email=validated_data['email'],
-            username=validated_data['username']
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -28,4 +30,4 @@ class CustomUserSerializer(serializers.Serializer):
         return instance
 
     def delete(self, validated_data):
-        return CustomUser.objects.delete(validated_data)
+        return CustomUser.objects.delete(**validated_data)

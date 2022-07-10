@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Project, Pledge, PLEDGE_TYPES, CATEGORIES, SKILLS
+from django.utils import timezone
 
 class PledgeSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
@@ -19,7 +20,7 @@ class ProjectSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=None)
     goal = serializers.CharField(max_length=None)
     is_open = serializers.BooleanField()
-    date_created = serializers.DateTimeField()
+    date_created = serializers.DateTimeField(read_only=True, default=timezone.now)
     owner = serializers.ReadOnlyField(source='owner.id')
 
     def create(self, validated_data):
