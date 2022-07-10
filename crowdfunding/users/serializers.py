@@ -28,4 +28,4 @@ class CustomUserSerializer(serializers.Serializer):
         return instance
 
     def delete(self, validated_data):
-        return CustomUser.objects.delete(**validated_data)
+        return CustomUser.objects.delete(validated_data)
