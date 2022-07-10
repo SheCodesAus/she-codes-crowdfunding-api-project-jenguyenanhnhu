@@ -27,27 +27,32 @@ class ProjectDetail(APIView):
     def get_object(self, pk):
         try:
             project = Project.objects.get(pk=pk)
-            self.check_object_permissions(self.request,project)
+            self.check_object_permissions(self.request, project)
             return project
         except Project.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):
-        project = self.get_object(pk)
-        serializer = ProjectDetailSerializer(project)
+        serializer = ProjectDetailSerializer(self.get_object(pk))
         return Response(serializer.data)
 
     def put(self, request, pk):
-        project = self.get_object(pk)
-        data = request.data
-        serializer = ProjectDetailSerializer(instance=project, data=data, partial=True)
+        serializer = ProjectDetailSerializer(instance=self.get_object(pk), data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, {"Oops! You didn't create this project. Try editing your own project."}, status=status.HTTP_401_UNAUTHORIZED)
 
 class PledgeList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+    def get_object(self, pk):
+        try:
+            pledge = Pledge.objects.get(pk=pk)
+            self.check_object_permissions(self.request, pledge)
+            return pledge
+        except Pledge.DoesNotExist:
+            raise Http404
 
     def get(self, request):
         pledges = Pledge.objects.all()
@@ -62,3 +67,10 @@ class PledgeList(APIView):
             serializer.save(supporter=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, pk):
+        serializer = PledgeSerializer(instance=self.get_object(pk), data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, {"Oops! You're trying to change someone else's pledge."}, status=status.HTTP_401_UNAUTHORIZED)
