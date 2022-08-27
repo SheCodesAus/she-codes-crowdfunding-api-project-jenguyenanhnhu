@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Pledge, Post, PLEDGE_TYPES, CATEGORIES, SKILLS, PROGRESS_TRACKER
+from .models import Project, Pledge, Post, PLEDGE_TYPES, PROGRESS_TRACKER
 from django.utils import timezone
 
 class PledgeSerializer(serializers.Serializer):
