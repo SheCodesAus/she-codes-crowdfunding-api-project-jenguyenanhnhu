@@ -47,5 +47,5 @@ class CustomUserDetail(APIView):
         if request.user == self.get_object(pk):
             serializer = CustomUserSerializer(request.user)
             serializer.delete(validated_data=True)
-            return Response(serializer.data, {"You've just deleted your account."}, status=status.HTTP_204_NO_CONTENT)
+            return Response(serializer.data, {"You've just deleted your account. To be part of the Sprocket community, you'll need to create another account."}, status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, {"Oops! You can only delete your user account. Go to your account to do so."}, status=status.HTTP_401_UNAUTHORIZED)
