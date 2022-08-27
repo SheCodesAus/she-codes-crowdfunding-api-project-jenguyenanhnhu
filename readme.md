@@ -45,12 +45,7 @@ For a behind-the-scenes look, visit: https://github.com/SheCodesAus/she-codes-cr
 	    "comment": "test pledge",
 	    "project_id": "1"
 
-    The "type" field will only allow the following options: 
-        * "$" - Money
-        * "T" - Time
-        * "A" - Advice
-        * "R" - Resources
-        * "O" - Other
+    The "type" field will only allow the following options: $, Time, Advice, Resources, and Other.
 
 
 6. Go to GET projects/your-project-id and view your project.

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Pledge, PLEDGE_TYPES, CATEGORIES, SKILLS
+from .models import Project, Pledge, Post, PLEDGE_TYPES, CATEGORIES, SKILLS, PROGRESS_TRACKER
 from django.utils import timezone
 
 class PledgeSerializer(serializers.Serializer):
@@ -22,13 +22,41 @@ class PledgeSerializer(serializers.Serializer):
         instance.save()
         return instance
 
+class PostSerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
+    title = serializers.CharField(max_length=300)
+    image = serializers.FileField(required=False)
+    is_technology = serializers.BooleanField()
+    is_sustainability = serializers.BooleanField()
+    is_education = serializers.BooleanField()
+    is_diversity = serializers.BooleanField()
+    is_health = serializers.BooleanField()
+    is_human_rights = serializers.BooleanField()
+    is_other = serializers.BooleanField()
+    message = serializers.CharField(max_length=None)
+    progress = serializers.ChoiceField(choices=PROGRESS_TRACKER)
+    date_created = serializers.DateTimeField(read_only=True, default=timezone.now)
+    next_update = serializers.DateField()
+
+    def create(self, validated_data):
+        return Post.objects.create(**validated_data)
+    
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.image = validated_data.get('image',instance.image)
+        instance.message = validated_data.get('message', instance.message)
+        instance.progress = validated_data.get('progress', instance.progress)
+        instance.date_created = instance.date_created
+        instance.next_update = validated_data.get('next_update', instance.next_update)
+        instance.save()
+        return instance
 class ProjectSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     name = serializers.CharField(max_length=200)
-    image = serializers.FileField(required=False)
+    image = serializers.URLField(required=False)
     description = serializers.CharField(max_length=None)
     goal = serializers.CharField(max_length=None)
-    is_open = serializers.BooleanField()
+    progress = serializers.ChoiceField(choices=PROGRESS_TRACKER)
     date_created = serializers.DateTimeField(read_only=True, default=timezone.now)
     owner = serializers.ReadOnlyField(source='owner.id')
 
@@ -37,6 +65,7 @@ class ProjectSerializer(serializers.Serializer):
 
 class ProjectDetailSerializer(ProjectSerializer):
     pledges = PledgeSerializer(many=True, read_only=True)
+    updates = PostSerializer(many=True, read_only=True)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
